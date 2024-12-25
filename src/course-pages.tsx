@@ -3,7 +3,7 @@ import CourseModules from "./course-modules";
 import CourseAssignments from "./course-assignments";
 import CourseAnnouncements from "./course-announcments";
 
-export default function CoursePages({ course }: { course: { name: string; courseCode: string } }) {
+export default function CoursePages({ course }: { course: { name: string; _id: string } }) {
   const { push } = useNavigation();
 
   // Mock data for course pages with subtitles

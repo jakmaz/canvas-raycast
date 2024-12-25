@@ -1,13 +1,13 @@
-import { ActionPanel, Action, Icon, List, Color, useNavigation, showToast, ToastStyle } from "@raycast/api";
-import { useFavoritedCourses } from "./canvasAPI";
+import { ActionPanel, Action, Icon, List, Color, useNavigation, showToast, Toast } from "@raycast/api";
 import CoursePages from "./course-pages";
+import { useCourses } from "./hooks/useCourses";
 
 export default function Command() {
-  const { isLoading, data, error } = useFavoritedCourses();
+  const { isLoading, data, error } = useCourses();
   const { push } = useNavigation();
 
   if (error) {
-    showToast(ToastStyle.Failure, "Failed to fetch courses", error.message);
+    showToast(Toast.Style.Failure, "Failed to fetch courses", error.message);
   }
 
   // Function to determine the icon and color based on course properties
@@ -34,7 +34,7 @@ export default function Command() {
             actions={
               <ActionPanel>
                 <Action
-                  title="View Course Pages"
+                  title="View More"
                   onAction={() => push(<CoursePages course={course} />)} // Navigate to CoursePages
                 />
               </ActionPanel>
