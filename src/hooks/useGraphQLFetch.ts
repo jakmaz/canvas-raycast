@@ -1,5 +1,6 @@
 import { useFetch } from "@raycast/utils";
 import { getPreferenceValues } from "@raycast/api";
+import { debugConfig } from "../utils/debugConfig"; // Import the debugConfig
 
 interface Preferences {
   canvasUrl: string;
@@ -20,8 +21,14 @@ export function useGraphQLFetch<T>(query: string) {
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-      const { data } = await response.json();
-      return data;
+
+      const json = await response.json();
+
+      if (debugConfig.printFetches) {
+        console.log("Response Data:", json.data);
+      }
+
+      return json.data;
     },
   });
 }
