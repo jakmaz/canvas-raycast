@@ -39,7 +39,7 @@ export function useGraphQLFetch<T>(query: string) {
   });
 }
 
-// Specific fetch hook for favorited courses
+// Specific fetch hook for favorited courses with sorting logic
 export function useFavoritedCourses() {
   const query = `
     query MyQuery {
@@ -54,6 +54,25 @@ export function useFavoritedCourses() {
     }
   `;
 
-  // Use the FavoritedCoursesResponse type as the generic type
-  return useGraphQLFetch<FavoritedCoursesResponse>(query);
+  // Fetch courses using the generic GraphQL fetch hook
+  const { data, isLoading, error, revalidate } = useGraphQLFetch<FavoritedCoursesResponse>(query);
+
+  // Sort courses: Favorited first, then published, then unpublished
+  const sortedCourses = data?.allCourses?.sort((a, b) => {
+    const aFavorited = a.dashboardCard.isFavorited ? 1 : 0;
+    const bFavorited = b.dashboardCard.isFavorited ? 1 : 0;
+
+    const aPublished = a.dashboardCard.published ? 1 : 0;
+    const bPublished = b.dashboardCard.published ? 1 : 0;
+
+    if (aFavorited !== bFavorited) {
+      return bFavorited - aFavorited; // Favorited courses first
+    }
+    if (aPublished !== bPublished) {
+      return bPublished - aPublished; // Published courses next
+    }
+    return 0; // Keep original order for the rest
+  });
+
+  return { data: { allCourses: sortedCourses }, isLoading, error, revalidate };
 }
