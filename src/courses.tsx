@@ -2,7 +2,7 @@ import { ActionPanel, Action, Icon, List, Color, useNavigation, showToast, Toast
 import CoursePages from "./course-pages";
 import { useCourses } from "./hooks/useCourses";
 
-export default function Command() {
+export default function CoursesCommand() {
   const { isLoading, data, error } = useCourses();
   const { push } = useNavigation();
 

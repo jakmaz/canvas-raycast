@@ -14,16 +14,37 @@
     {
       "name": "courses",
       "title": "Courses",
-      "subtitle": "Show all Courses",
       "description": "Show all Courses",
-      "mode": "view"
+      "mode": "view",
+      "keywords": [
+        "classes",
+        "enrolled",
+        "learning"
+      ]
     },
     {
-      "name": "announcments",
-      "title": "Announcments",
-      "subtitle": "Show all Announcments",
-      "description": "Show all Announcments",
-      "mode": "view"
+      "name": "feed",
+      "title": "Feed",
+      "description": "Show all recent announcements and updates",
+      "mode": "view",
+      "keywords": [
+        "announcements",
+        "updates",
+        "news"
+      ]
+    },
+    {
+      "name": "deadlines",
+      "title": "Deadlines",
+      "description": "View all upcoming assignments and due dates",
+      "mode": "view",
+      "keywords": [
+        "due",
+        "tasks",
+        "assignments",
+        "dates",
+        "upcoming"
+      ]
     }
   ],
   "preferences": [
@@ -39,7 +60,7 @@
       "required": true,
       "name": "token",
       "title": "Access Token",
-      "description": "Your Canvas Access Token, can be created in Canvas account settings",
+      "description": "Your Canvas LMS Access Token, can be created in account settings",
       "type": "textfield"
     }
   ],
