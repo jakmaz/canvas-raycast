@@ -1,10 +1,31 @@
-import { ActionPanel, Action, Icon, List, Color } from "@raycast/api";
+import { ActionPanel, Action, Icon, List, useNavigation } from "@raycast/api";
+import CourseModules from "./course-modules";
+import CourseAssignments from "./course-assignments";
+import CourseAnnouncements from "./course-announcments";
 
 export default function CoursePages({ course }: { course: { name: string; courseCode: string } }) {
-  // Mock data for course pages
+  const { push } = useNavigation();
+
+  // Mock data for course pages with subtitles
   const pages = [
-    { title: "Modules", icon: Icon.List, url: `https://${course.courseCode}/modules` },
-    { title: "Assignments", icon: Icon.TextDocument, url: `https://${course.courseCode}/assignments` },
+    {
+      title: "Modules",
+      subtitle: "View and manage course modules",
+      icon: Icon.List,
+      component: <CourseModules course={course} />,
+    },
+    {
+      title: "Assignments",
+      subtitle: "View and submit assignments",
+      icon: Icon.Pencil,
+      component: <CourseAssignments course={course} />,
+    },
+    {
+      title: "Announcements",
+      subtitle: "Read course announcements",
+      icon: Icon.Megaphone,
+      component: <CourseAnnouncements course={course} />,
+    },
   ];
 
   return (
@@ -13,10 +34,11 @@ export default function CoursePages({ course }: { course: { name: string; course
         <List.Item
           key={page.title}
           title={page.title}
-          icon={{ source: page.icon, tintColor: Color.Green }} // Same color for all icons
+          subtitle={page.subtitle} // Adding subtitle to describe the page
+          icon={{ source: page.icon }}
           actions={
             <ActionPanel>
-              <Action.OpenInBrowser title={`Open ${page.title}`} url={page.url} />
+              <Action title={`Open ${page.title}`} onAction={() => push(page.component)} />
             </ActionPanel>
           }
         />

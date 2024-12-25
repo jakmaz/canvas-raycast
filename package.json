@@ -14,8 +14,15 @@
     {
       "name": "courses",
       "title": "Courses",
-      "subtitle": "Show all Canva's courses",
-      "description": "Show all Canva's courses",
+      "subtitle": "Show all Courses",
+      "description": "Show all Courses",
+      "mode": "view"
+    },
+    {
+      "name": "announcments",
+      "title": "Announcments",
+      "subtitle": "Show all Announcments",
+      "description": "Show all Announcments",
       "mode": "view"
     }
   ],
