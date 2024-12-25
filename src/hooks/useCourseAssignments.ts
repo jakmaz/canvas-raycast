@@ -11,7 +11,7 @@ export interface CourseAssignmentsResponse {
 
 export interface Assignment {
   name: string;
-  dueAt: string | null;
+  dueAt: string | null; // `null` means no due date
   submissionsConnection: {
     nodes: Submission[];
   };
@@ -19,7 +19,7 @@ export interface Assignment {
 
 export interface Submission {
   state: string;
-  submittedAt: string;
+  submissionStatus: string;
 }
 
 export function useCourseAssignments(courseId: string) {
@@ -34,7 +34,7 @@ export function useCourseAssignments(courseId: string) {
             submissionsConnection {
               nodes {
                 state
-                submittedAt
+                submissionStatus
               }
             }
           }
@@ -43,5 +43,28 @@ export function useCourseAssignments(courseId: string) {
     }
   `;
 
-  return useGraphQLFetch<CourseAssignmentsResponse>(query);
+  const { data, isLoading, error, revalidate } = useGraphQLFetch<CourseAssignmentsResponse>(query);
+
+  // Sort assignments by due date
+  const sortedAssignments =
+    data?.course.assignmentsConnection.nodes.sort((a, b) => {
+      if (a.dueAt === null) return 1; // `null` due dates go to the end
+      if (b.dueAt === null) return -1;
+      return new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime();
+    }) || [];
+
+  return {
+    data: {
+      ...data,
+      course: {
+        ...data?.course,
+        assignmentsConnection: {
+          nodes: sortedAssignments,
+        },
+      },
+    },
+    isLoading,
+    error,
+    revalidate,
+  };
 }
