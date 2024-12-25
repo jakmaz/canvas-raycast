@@ -61,6 +61,7 @@
       "name": "token",
       "title": "Access Token",
       "description": "Your Canvas LMS Access Token, can be created in account settings",
+      "placeholder": "12345~AbCdEfGhIjKlMnOpQrStUvWxYz1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPp",
       "type": "textfield"
     }
   ],
