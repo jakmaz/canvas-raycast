@@ -1,51 +1,40 @@
-import { useGraphQLFetch } from "./useCanvasFetch";
-
-export interface CoursesResponse {
-  allCourses: Course[];
-}
+import { useAPIFetch } from "./useCanvasFetch"; // Assuming this handles API requests
 
 export interface Course {
-  _id: string;
+  id: string;
   courseCode: string;
   name: string;
-  dashboardCard: {
-    isFavorited: boolean;
-    published: boolean;
-  };
+  isFavorite: boolean;
+  published: boolean; // Published state
 }
 
 export function useCourses() {
-  const query = `
-    query MyQuery {
-      allCourses {
-        _id
-        courseCode
-        name
-        dashboardCard {
-          isFavorited
-          published
-        }
-      }
+  const endpoint = "courses?state[]=unpublished&state[]=available&include[]=favorites&per_page=100";
+
+  const { data, isLoading, error, revalidate } = useAPIFetch<Course[]>(endpoint);
+
+  // Process and map the courses
+  const processedCourses =
+    data?.map((course: any) => ({
+      id: course.id.toString(),
+      courseCode: course.course_code,
+      name: course.name,
+      isFavorite: course.is_favorite,
+      published: course.workflow_state === "available", // Published only if "available"
+    })) || [];
+
+  // Sort Courses:
+  const sortedCourses = [...processedCourses].sort((a, b) => {
+    if (a.isFavorite !== b.isFavorite) {
+      return b.isFavorite ? 1 : -1; // Favorite should be first
     }
-  `;
-
-  const { data, isLoading, error, revalidate } = useGraphQLFetch<CoursesResponse>(query);
-
-  const sortedCourses = data?.allCourses?.sort((a, b) => {
-    const aFavorited = a.dashboardCard.isFavorited ? 1 : 0;
-    const bFavorited = b.dashboardCard.isFavorited ? 1 : 0;
-
-    const aPublished = a.dashboardCard.published ? 1 : 0;
-    const bPublished = b.dashboardCard.published ? 1 : 0;
-
-    if (aFavorited !== bFavorited) {
-      return bFavorited - aFavorited;
-    }
-    if (aPublished !== bPublished) {
-      return bPublished - aPublished;
+    if (a.published !== b.published) {
+      return b.published ? 1 : -1; // Published should be next
     }
     return 0;
   });
 
-  return { data: { allCourses: sortedCourses }, isLoading, error, revalidate };
+  console.log("Sorted Courses:", sortedCourses); // Debugging
+
+  return { data: sortedCourses, isLoading, error, revalidate };
 }

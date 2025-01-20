@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Color, Icon, List, showToast, Toast } from "@raycast/api";
 import { useCourseAssignments } from "./hooks/useCourseAssignments";
 
-export default function CourseAssignments({ course }: { course: { name: string; _id: string } }) {
-  const { isLoading, data, error } = useCourseAssignments(course._id);
+export default function CourseAssignments({ course }: { course: { name: string; id: string } }) {
+  const { isLoading, data, error } = useCourseAssignments(course.id);
 
   const [filter, setFilter] = useState<string>("upcoming"); // Filter state
 
