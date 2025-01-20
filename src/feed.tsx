@@ -18,7 +18,8 @@ export default function FeedCommand() {
           accessories={[{ text: activity.formattedCreatedAt }]}
           actions={
             <ActionPanel>
-              <Action.OpenInBrowser title="Open Activity" url={activity.htmlUrl} />
+              <Action.OpenInBrowser title="Open in Browser" url={activity.htmlUrl} />
+              <Action.CopyToClipboard title="Copy Activity Link" content="#1" />
             </ActionPanel>
           }
         />
