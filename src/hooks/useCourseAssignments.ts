@@ -1,4 +1,4 @@
-import { useGraphQLFetch } from "./useGraphQLFetch";
+import { useGraphQLFetch } from "./useCanvasFetch";
 
 export interface CourseAssignmentsResponse {
   course: {
