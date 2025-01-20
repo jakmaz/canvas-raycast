@@ -1,7 +1,7 @@
 import { ActionPanel, Action, Icon, List, useNavigation } from "@raycast/api";
 import CourseModules from "./course-modules";
 import CourseAssignments from "./course-assignments";
-import CourseAnnouncements from "./course-announcments";
+import CourseAnnouncements from "./course-announcements";
 
 export default function CoursePages({ course }: { course: { name: string; _id: string } }) {
   const { push } = useNavigation();

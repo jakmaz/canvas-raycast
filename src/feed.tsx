@@ -1,66 +1,28 @@
-import { useState } from "react";
-import { Action, ActionPanel, List } from "@raycast/api";
+import { ActionPanel, Action, List } from "@raycast/api";
+import { ActivityItem, useActivityStream } from "./hooks/useAnnouncments";
 
-interface Announcement {
-  title: string;
-  date: string;
-  id: string;
-  content: string;
-}
+export default function FeedCommand() {
+  const { activities, isLoading, error } = useActivityStream();
 
-const announcements: Announcement[] = [
-  {
-    title: "Welcome to the Course",
-    date: "2024-01-01",
-    id: "001",
-    content: "This is the first announcement to welcome you to the course! We are excited to have you onboard.",
-  },
-  {
-    title: "Assignment Deadline Extended",
-    date: "2024-01-10",
-    id: "002",
-    content:
-      "Good news! The deadline for the first assignment has been extended by one week. Please check the details in the assignments section.",
-  },
-  {
-    title: "New Module Released",
-    date: "2024-01-15",
-    id: "003",
-    content: "We have just released a new module covering advanced topics. Make sure to check it out!",
-  },
-];
-
-export default function AnnouncementsCommand() {
-  const [showingDetail, setShowingDetail] = useState(true);
+  if (error) {
+    return <List isLoading={false} searchBarPlaceholder="Error fetching activity stream..." />;
+  }
 
   return (
-    <List isShowingDetail={showingDetail}>
-      {announcements.map((announcement) => {
-        const props: Partial<List.Item.Props> = showingDetail
-          ? {
-              detail: (
-                <List.Item.Detail
-                  markdown={`# ${announcement.title}\n\n**Date:** ${announcement.date}\n\n${announcement.content}`}
-                />
-              ),
-            }
-          : {
-              accessories: [{ text: announcement.date }],
-            };
-        return (
-          <List.Item
-            key={announcement.id}
-            title={announcement.title}
-            subtitle={announcement.date}
-            {...props}
-            actions={
-              <ActionPanel>
-                <Action title="Toggle Detail" onAction={() => setShowingDetail(!showingDetail)} />
-              </ActionPanel>
-            }
-          />
-        );
-      })}
+    <List isLoading={isLoading} searchBarPlaceholder="Search activities...">
+      {activities.map((activity: ActivityItem) => (
+        <List.Item
+          key={activity.id}
+          title={activity.title}
+          subtitle={activity.type}
+          accessories={[{ text: activity.formattedCreatedAt }]}
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser title="Open Activity" url={activity.htmlUrl} />
+            </ActionPanel>
+          }
+        />
+      ))}
     </List>
   );
 }
