@@ -36,7 +36,7 @@
     {
       "name": "deadlines",
       "title": "Deadlines",
-      "description": "View all upcoming assignments and due dates",
+      "description": "Show all upcoming assignments and due dates",
       "mode": "view",
       "keywords": [
         "due",
