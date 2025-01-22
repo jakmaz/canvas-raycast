@@ -67,7 +67,12 @@ export default function CourseAssignments({ course }: { course: { name: string; 
       }
     >
       {assignments?.map((assignment, index) => (
-        <List.Item key={index} icon={assignment.icon} title={assignment.name} subtitle={assignment.dueAt} />
+        <List.Item
+          key={index}
+          icon={assignment.icon}
+          title={assignment.name}
+          accessories={[{ text: assignment.dueAt }]}
+        />
       ))}
     </List>
   );
