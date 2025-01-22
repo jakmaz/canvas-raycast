@@ -1,11 +1,11 @@
-import { ActionPanel, Action, List, Icon, Color } from "@raycast/api";
+import { ActionPanel, Action, List, Icon, Color, showToast, Toast } from "@raycast/api";
 import { Assignment, useDeadlines } from "./hooks/useDeadlines";
 
 export default function DeadlinesCommand() {
   const { assignments, isLoading, error } = useDeadlines();
 
   if (error) {
-    return <List isLoading={false} searchBarPlaceholder="Error fetching assignments..." />;
+    showToast(Toast.Style.Failure, "Failed to fetch deadlines", error.message);
   }
 
   return (

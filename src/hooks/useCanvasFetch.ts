@@ -19,7 +19,10 @@ export function useGraphQLFetch<T>(query: string) {
     body: JSON.stringify({ query }),
     parseResponse: async (response) => {
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        if (response.statusText === "Unauthorized") {
+          throw new Error("Unauthorized, check your token in extension settings.");
+        }
+        throw new Error(response.statusText);
       }
 
       const json = await response.json();
@@ -43,7 +46,10 @@ export function useAPIFetch<T>(endpoint: string) {
     },
     parseResponse: async (response) => {
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        if (response.statusText === "Unauthorized") {
+          throw new Error("Unauthorized, check your token in extension settings.");
+        }
+        throw new Error(response.statusText);
       }
 
       const json = await response.json();

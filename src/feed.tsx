@@ -1,11 +1,11 @@
-import { ActionPanel, Action, List } from "@raycast/api";
+import { ActionPanel, Action, List, showToast, Toast } from "@raycast/api";
 import { ActivityItem, useActivityStream } from "./hooks/useAnnouncments";
 
 export default function FeedCommand() {
   const { activities, isLoading, error } = useActivityStream();
 
   if (error) {
-    return <List isLoading={false} searchBarPlaceholder="Error fetching activity stream..." />;
+    showToast(Toast.Style.Failure, "Failed to fetch feed", error.message);
   }
 
   return (
