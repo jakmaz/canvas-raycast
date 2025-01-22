@@ -13,8 +13,8 @@
   "commands": [
     {
       "name": "courses",
-      "title": "Courses",
-      "description": "Show all Courses",
+      "title": "View Courses",
+      "description": "View all Courses",
       "mode": "view",
       "keywords": [
         "classes",
@@ -24,7 +24,7 @@
     },
     {
       "name": "feed",
-      "title": "Feed",
+      "title": "Show Feed",
       "description": "Show all recent announcements and updates",
       "mode": "view",
       "keywords": [
@@ -35,7 +35,7 @@
     },
     {
       "name": "deadlines",
-      "title": "Deadlines",
+      "title": "Show Deadlines",
       "description": "Show all upcoming assignments and due dates",
       "mode": "view",
       "keywords": [
