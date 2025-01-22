@@ -13,7 +13,7 @@ export default function CoursesCommand() {
   // Function to determine the icon and color based on course properties
   function getIconAndColor(course: Course) {
     if (!course.published) {
-      return { source: Icon.WrenchScrewdriver, tintColor: Color.Orange };
+      return { source: Icon.WrenchScrewdriver };
     }
     if (course.isFavorite) {
       return { source: Icon.Star, tintColor: Color.Yellow };
@@ -30,7 +30,7 @@ export default function CoursesCommand() {
             key={course.courseCode}
             icon={icon}
             title={course.name || "Untitled Course"}
-            subtitle={course.courseCode || "No course code"}
+            accessories={[{ text: course.courseCode || "No course code" }]}
             actions={
               <ActionPanel>
                 <Action
