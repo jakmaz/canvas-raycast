@@ -1,70 +1,27 @@
-import { useGraphQLFetch } from "./useCanvasFetch";
+import { formatDate } from "../utils/formatDate";
+import { useAPIFetch } from "./useCanvasFetch";
 
-export interface CourseAssignmentsResponse {
-  course: {
-    name: string;
-    assignmentsConnection: {
-      nodes: Assignment[];
-    };
-  };
-}
-
-export interface Assignment {
+interface Assignment {
+  id: number;
   name: string;
-  dueAt: string | null; // `null` means no due date
-  submissionsConnection: {
-    nodes: Submission[];
-  };
+  html_url: string;
+  due_at: string;
 }
 
-export interface Submission {
-  state: string;
-  submissionStatus: string;
-}
-
+/**
+ * Fetch and process upcoming assignments.
+ */
 export function useCourseAssignments(courseId: string) {
-  const query = `
-    query MyQuery {
-      course(id: "${courseId}") {
-        name
-        assignmentsConnection {
-          nodes {
-            name
-            dueAt
-            submissionsConnection {
-              nodes {
-                state
-                submissionStatus
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
+  const { data, isLoading, error, revalidate } = useAPIFetch<Assignment[]>(`courses/${courseId}/assignments`);
 
-  const { data, isLoading, error, revalidate } = useGraphQLFetch<CourseAssignmentsResponse>(query);
+  const assignments =
+    data?.map((item) => ({
+      id: item.id.toString(),
+      name: item.name,
+      dueAt: item.due_at,
+      formattedDueAt: formatDate(item.due_at),
+      htmlUrl: item.html_url,
+    })) || [];
 
-  // Sort assignments by due date
-  const sortedAssignments =
-    data?.course.assignmentsConnection.nodes.sort((a, b) => {
-      if (a.dueAt === null) return 1; // `null` due dates go to the end
-      if (b.dueAt === null) return -1;
-      return new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime();
-    }) || [];
-
-  return {
-    data: {
-      ...data,
-      course: {
-        ...data?.course,
-        assignmentsConnection: {
-          nodes: sortedAssignments,
-        },
-      },
-    },
-    isLoading,
-    error,
-    revalidate,
-  };
+  return { assignments, isLoading, error, revalidate };
 }

@@ -1,57 +1,39 @@
 import { useState } from "react";
-import { Color, Icon, List, showToast, Toast } from "@raycast/api";
+import { Color, Icon, List, showToast, Toast, Action, ActionPanel } from "@raycast/api";
 import { useCourseAssignments } from "./hooks/useCourseAssignments";
 
 export default function CourseAssignments({ course }: { course: { name: string; id: string } }) {
-  const { isLoading, data, error } = useCourseAssignments(course.id);
-
-  const [filter, setFilter] = useState<string>("upcoming"); // Filter state
+  const { assignments, isLoading, error } = useCourseAssignments(course.id);
+  const [filter, setFilter] = useState<string>("upcoming");
 
   if (error) {
     showToast(Toast.Style.Failure, "Failed to fetch assignments", error.message);
   }
 
   // Function to determine the icon based on assignment properties
-  function getIcon(assignment: { dueAt: string | null; submissionsConnection: { nodes: any[] } }) {
-    const dueDate = assignment.dueAt ? new Date(assignment.dueAt) : null;
-    const isDueSoon = dueDate && dueDate.getTime() - Date.now() <= 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+  function getIcon(dueAt: string | null) {
+    if (!dueAt) return { source: Icon.Document, tintColor: Color.Blue }; // Default icon if no due date
 
-    // Determine if there is a valid submission
-    const hasSubmission = assignment.submissionsConnection.nodes.some(
-      (submission) => submission.submissionStatus === "submitted",
-    );
+    const dueDate = new Date(dueAt);
+    const isDueSoon = dueDate.getTime() - Date.now() <= 7 * 24 * 60 * 60 * 1000; // Due in the next 7 days
 
-    if (hasSubmission) {
-      return { source: Icon.Checkmark, tintColor: Color.Green }; // Checkmark for submitted assignments
-    }
-    if (isDueSoon) {
-      return { source: Icon.Clock, tintColor: Color.Orange }; // Clock for assignments due soon
-    }
-    return { source: Icon.Document, tintColor: Color.Blue }; // Default icon
+    return isDueSoon
+      ? { source: Icon.Clock, tintColor: Color.Orange } // Clock for due soon
+      : { source: Icon.Document, tintColor: Color.Blue }; // Default icon
   }
 
-  // Filter assignments
   const now = new Date();
-  const assignments = data?.course.assignmentsConnection.nodes
-    .map((assignment) => {
-      const dueDate = assignment.dueAt ? new Date(assignment.dueAt) : null;
-      const dueAt = dueDate ? dueDate.toLocaleDateString() : "No due date";
 
-      return {
-        name: assignment.name,
-        dueAt,
-        dueDate,
-        icon: getIcon(assignment),
-      };
-    })
+  const filteredAssignments = assignments
+    .map((assignment) => ({
+      ...assignment,
+      icon: getIcon(assignment.dueAt),
+      dueDate: assignment.dueAt ? new Date(assignment.dueAt) : null,
+    }))
     .filter((assignment) => {
-      if (filter === "upcoming") {
-        return assignment.dueDate && assignment.dueDate > now; // Due dates in the future
-      }
-      if (filter === "past") {
-        return assignment.dueDate && assignment.dueDate <= now; // Due dates in the past
-      }
-      return true; // Show all if no filter
+      if (filter === "upcoming") return assignment.dueDate && assignment.dueDate > now;
+      if (filter === "past") return assignment.dueDate && assignment.dueDate <= now;
+      return true; // Show all
     });
 
   return (
@@ -66,12 +48,18 @@ export default function CourseAssignments({ course }: { course: { name: string; 
         </List.Dropdown>
       }
     >
-      {assignments?.map((assignment, index) => (
+      {filteredAssignments.map((assignment) => (
         <List.Item
-          key={index}
+          key={assignment.id}
           icon={assignment.icon}
           title={assignment.name}
-          accessories={[{ text: assignment.dueAt }]}
+          accessories={[{ text: assignment.formattedDueAt }]}
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser title="Open Assignment" url={assignment.htmlUrl} />
+              <Action.CopyToClipboard title="Copy Assignment Link" content={assignment.htmlUrl} />
+            </ActionPanel>
+          }
         />
       ))}
     </List>
