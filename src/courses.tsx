@@ -1,6 +1,6 @@
 import { ActionPanel, Action, Icon, List, Color, useNavigation, showToast, Toast } from "@raycast/api";
 import CoursePages from "./course-pages";
-import { Course, useCourses } from "./hooks/useCourses";
+import { useCourses } from "./hooks/useCourses";
 
 export default function CoursesCommand() {
   const { isLoading, data, error } = useCourses();
@@ -11,7 +11,7 @@ export default function CoursesCommand() {
   }
 
   // Function to determine the icon and color based on course properties
-  function getIconAndColor(course: Course) {
+  function getIconAndColor(course: any) {
     if (!course.published) {
       return { source: Icon.WrenchScrewdriver };
     }
@@ -23,7 +23,7 @@ export default function CoursesCommand() {
 
   return (
     <List isLoading={isLoading} searchBarPlaceholder="Search courses...">
-      {data?.map((course: Course) => {
+      {data?.map((course) => {
         const icon = getIconAndColor(course);
         return (
           <List.Item

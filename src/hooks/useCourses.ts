@@ -1,40 +1,35 @@
-import { useAPIFetch } from "./useCanvasFetch"; // Assuming this handles API requests
+import { useAPIFetch } from "./useCanvasFetch";
 
-export interface Course {
-  id: string;
-  courseCode: string;
+interface CourseResponse {
+  id: number;
+  course_code: string;
   name: string;
-  isFavorite: boolean;
-  published: boolean; // Published state
+  is_favorite: boolean;
+  workflow_state: string;
 }
 
+/**
+ * Fetch and process courses.
+ */
 export function useCourses() {
   const endpoint = "courses?state[]=unpublished&state[]=available&include[]=favorites&per_page=100";
 
-  const { data, isLoading, error, revalidate } = useAPIFetch<Course[]>(endpoint);
+  const { data, isLoading, error, revalidate } = useAPIFetch<CourseResponse[]>(endpoint);
 
-  // Process and map the courses
-  const processedCourses =
-    data?.map((course: any) => ({
+  const courses =
+    data?.map((course) => ({
       id: course.id.toString(),
       courseCode: course.course_code,
       name: course.name,
       isFavorite: course.is_favorite,
-      published: course.workflow_state === "available", // Published only if "available"
+      published: course.workflow_state === "available",
     })) || [];
 
-  // Sort Courses:
-  const sortedCourses = [...processedCourses].sort((a, b) => {
-    if (a.isFavorite !== b.isFavorite) {
-      return b.isFavorite ? 1 : -1; // Favorite should be first
-    }
-    if (a.published !== b.published) {
-      return b.published ? 1 : -1; // Published should be next
-    }
+  const sortedCourses = courses.sort((a, b) => {
+    if (a.isFavorite !== b.isFavorite) return b.isFavorite ? 1 : -1;
+    if (a.published !== b.published) return b.published ? 1 : -1;
     return 0;
   });
-
-  console.log("Sorted Courses:", sortedCourses); // Debugging
 
   return { data: sortedCourses, isLoading, error, revalidate };
 }

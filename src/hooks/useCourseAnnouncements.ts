@@ -1,3 +1,4 @@
+import { formatDate } from "../utils/formatDate";
 import { useAPIFetch } from "./useCanvasFetch";
 
 interface Announcement {
@@ -5,7 +6,7 @@ interface Announcement {
   title: string;
   html_url: string;
   user_name: string;
-  last_reply_at: string;
+  created_at: string;
 }
 
 /**
@@ -13,7 +14,7 @@ interface Announcement {
  */
 export function useCourseAnnouncements(courseId: string) {
   const { data, isLoading, error, revalidate } = useAPIFetch<Announcement[]>(
-    `announcements?context_codes[]=course_${courseId}&start_date=2000-01-01&end_date=2100-01-01`,
+    `announcements?context_codes[]=course_${courseId}&start_date=2000-01-01&end_date=2100-01-01`, // Ensures all announcements
   );
 
   // Transform API response
@@ -21,9 +22,10 @@ export function useCourseAnnouncements(courseId: string) {
     data?.map((announcement) => ({
       id: announcement.id,
       title: announcement.title,
-      html_url: announcement.html_url,
-      user_name: announcement.user_name,
-      last_reply_at: announcement.last_reply_at,
+      htmlUrl: announcement.html_url,
+      userName: announcement.user_name,
+      createdAt: announcement.created_at,
+      formatedCreatedAt: formatDate(announcement.created_at),
     })) || [];
 
   return { announcements, isLoading, error, revalidate };

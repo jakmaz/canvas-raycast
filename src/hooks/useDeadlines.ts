@@ -1,12 +1,14 @@
+import { formatDate } from "../utils/formatDate";
 import { useAPIFetch } from "./useCanvasFetch";
 
-export interface Assignment {
-  id: string;
+interface Assignment {
+  id: number;
   title: string;
-  dueAt: string | null;
-  formattedDueAt: string; // Now in camelCase
-  htmlUrl: string;
-  contextName: string;
+  html_url: string;
+  context_name: string;
+  assignment?: {
+    due_at?: string;
+  };
 }
 
 /**
@@ -15,22 +17,12 @@ export interface Assignment {
 export function useDeadlines() {
   const { data, isLoading, error, revalidate } = useAPIFetch<Assignment[]>("users/self/upcoming_events");
 
-  // Process assignments to format dates and follow camelCase naming
   const assignments =
-    data?.map((item: any) => ({
-      id: item.id,
+    data?.map((item) => ({
+      id: item.id.toString(),
       title: item.title,
-      dueAt: item.assignment?.due_at || null, // Raw date
-      formattedDueAt: item.assignment?.due_at
-        ? new Date(item.assignment.due_at).toLocaleString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hourCycle: "h23",
-          })
-        : "No Due Date", // Pre-formatted date
+      dueAt: item.assignment?.due_at || null,
+      formattedDueAt: item.assignment?.due_at ? formatDate(item.assignment.due_at) : "No Due Date",
       htmlUrl: item.html_url,
       contextName: item.context_name,
     })) || [];

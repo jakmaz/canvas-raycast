@@ -15,13 +15,13 @@ export default function CourseAnnouncements({ course }: { course: { name: string
           <List.Item
             key={announcement.id}
             title={announcement.title}
-            subtitle={`By ${announcement.user_name}`}
+            subtitle={`By ${announcement.userName}`}
             icon={Icon.Megaphone} // 📢 Always a Megaphone
-            accessories={[{ text: new Date(announcement.last_reply_at).toLocaleDateString("en-GB") }]}
+            accessories={[{ text: announcement.formatedCreatedAt }]}
             actions={
               <ActionPanel>
-                <Action.OpenInBrowser title="Open in Browser" url={announcement.html_url} />
-                <Action.CopyToClipboard title="Copy Link" content={announcement.html_url} />
+                <Action.OpenInBrowser title="Open in Browser" url={announcement.htmlUrl} />
+                <Action.CopyToClipboard title="Copy Link" content={announcement.htmlUrl} />
               </ActionPanel>
             }
           />

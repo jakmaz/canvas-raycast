@@ -1,35 +1,32 @@
+import { formatDate } from "../utils/formatDate";
 import { useAPIFetch } from "./useCanvasFetch";
 
-export interface ActivityItem {
+interface ActivityItem {
   id: number;
   title: string;
   message: string;
   type: string;
-  formattedCreatedAt: string;
-  htmlUrl: string;
-  readState: boolean;
+  created_at: string;
+  html_url: string;
+  read_state: boolean;
 }
 
 /**
  * Fetch and process activity stream.
  */
-export function useActivityStream() {
+export function useFeed() {
   const { data, isLoading, error, revalidate } = useAPIFetch<ActivityItem[]>("users/self/activity_stream");
 
-  // Process activity items to format dates and use camelCase
   const activities =
-    data?.map((item: any) => ({
+    data?.map((item) => ({
       id: item.id,
       title: item.title,
       message: item.message || "No message",
       type: item.type,
-      formattedCreatedAt: new Date(item.created_at).toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }),
       htmlUrl: item.html_url,
       readState: item.read_state,
+      createdAt: item.created_at,
+      formattedCreatedAt: formatDate(item.created_at),
     })) || [];
 
   return { activities, isLoading, error, revalidate };
