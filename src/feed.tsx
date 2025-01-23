@@ -14,7 +14,6 @@ export default function FeedCommand() {
         <List.Item
           key={activity.id}
           title={activity.title}
-          subtitle={activity.type}
           accessories={[{ text: activity.formattedCreatedAt }]}
           actions={
             <ActionPanel>
