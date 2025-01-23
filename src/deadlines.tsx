@@ -1,4 +1,4 @@
-import { ActionPanel, Action, List, Icon, Color, showToast, Toast } from "@raycast/api";
+import { ActionPanel, Action, List, Icon, showToast, Toast } from "@raycast/api";
 import { useDeadlines } from "./hooks/useDeadlines";
 
 export default function DeadlinesCommand() {
@@ -15,7 +15,7 @@ export default function DeadlinesCommand() {
           key={assignment.id}
           title={assignment.title}
           subtitle={assignment.contextName}
-          accessories={[{ tag: new Date(assignment.dueAt) || "" }]}
+          accessories={[{ tag: new Date(assignment.dueAt) }]}
           icon={getIcon(assignment)}
           actions={
             <ActionPanel>
@@ -37,7 +37,7 @@ function getIcon(assignment: any) {
   const isDueSoon = dueDate && dueDate.getTime() - Date.now() <= 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
   if (isDueSoon) {
-    return { source: Icon.Clock, tintColor: Color.Orange }; // Due soon: Yellow clock
+    return { source: Icon.Clock };
   }
-  return { source: Icon.Document, tintColor: Color.Blue }; // Default: Blue document
+  return { source: Icon.Document };
 }
