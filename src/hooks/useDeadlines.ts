@@ -7,7 +7,7 @@ interface Assignment {
   html_url: string;
   context_name: string;
   assignment?: {
-    due_at?: string;
+    due_at: string;
   };
 }
 
@@ -21,7 +21,7 @@ export function useDeadlines() {
     data?.map((item) => ({
       id: item.id.toString(),
       title: item.title,
-      dueAt: item.assignment?.due_at || null,
+      dueAt: item.assignment?.due_at || "No date",
       formattedDueAt: item.assignment?.due_at ? formatDate(item.assignment.due_at) : "No Due Date",
       htmlUrl: item.html_url,
       contextName: item.context_name,
@@ -80,7 +80,7 @@ export function useMockDeadlines() {
       formattedDueAt: "In 30 days",
       htmlUrl: "https://canvas.example.com/assignments/6",
       contextName: "Computer Science",
-    }
+    },
   ];
 
   return {
