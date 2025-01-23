@@ -32,7 +32,7 @@ export function formatDate(isoString: string): string {
 
   return date.toLocaleDateString("en-GB", {
     day: "2-digit",
-    month: "numeric",
+    month: "2-digit",
     year: "numeric",
   });
 }
