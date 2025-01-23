@@ -48,7 +48,7 @@ export function useMockCourses() {
       courseCode: "MATH201",
       name: "Advanced Mathematics",
       isFavorite: true,
-      published: false,
+      published: true,
     },
     {
       id: "3",

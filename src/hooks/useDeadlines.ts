@@ -31,39 +31,56 @@ export function useDeadlines() {
 }
 
 export function useMockDeadlines() {
+  const now = Date.now();
   const mockAssignments = [
     {
-      id: "2",
-      title: "Midterm Essay",
-      dueAt: new Date(Date.now() + 0 * 24 * 60 * 60 * 1000).toISOString(),
-      formattedDueAt: "In 2 days",
-      htmlUrl: "https://canvas.example.com/assignments/2",
-      contextName: "World History",
-    },
-    {
-      id: "5",
-      title: "Pop Quiz",
-      dueAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes from now
+      id: "1",
+      title: "Pop Quiz: Linear Algebra",
+      dueAt: new Date(now + 30 * 60 * 1000).toISOString(), // 30 minutes
       formattedDueAt: "In 30 minutes",
-      htmlUrl: "https://canvas.example.com/assignments/5",
+      htmlUrl: "https://canvas.example.com/assignments/1",
       contextName: "Mathematics",
     },
     {
-      id: "4",
-      title: "Quick Lab Report",
-      dueAt: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(), // 3 hours from now
+      id: "2",
+      title: "Lab Report: Chemical Reactions",
+      dueAt: new Date(now + 3 * 60 * 60 * 1000).toISOString(), // 3 hours
       formattedDueAt: "In 3 hours",
-      htmlUrl: "https://canvas.example.com/assignments/4",
-      contextName: "Chemistry Lab",
+      htmlUrl: "https://canvas.example.com/assignments/2",
+      contextName: "Chemistry",
     },
     {
       id: "3",
-      title: "Group Presentation",
-      dueAt: null,
-      formattedDueAt: "No Due Date",
+      title: "Essay: Modern Literature",
+      dueAt: new Date(now + 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days
+      formattedDueAt: "In 2 days",
       htmlUrl: "https://canvas.example.com/assignments/3",
-      contextName: "Business Communication",
+      contextName: "English Literature",
     },
+    {
+      id: "4",
+      title: "Group Project: Market Analysis",
+      dueAt: new Date(now + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days
+      formattedDueAt: "In 5 days",
+      htmlUrl: "https://canvas.example.com/assignments/4",
+      contextName: "Business Studies",
+    },
+    {
+      id: "5",
+      title: "Final Project: Web Application",
+      dueAt: new Date(now + 14 * 24 * 60 * 60 * 1000).toISOString(), // 2 weeks
+      formattedDueAt: "In 2 weeks",
+      htmlUrl: "https://canvas.example.com/assignments/5",
+      contextName: "Web Development",
+    },
+    {
+      id: "6",
+      title: "Research Paper: AI Ethics",
+      dueAt: new Date(now + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days
+      formattedDueAt: "In 30 days",
+      htmlUrl: "https://canvas.example.com/assignments/6",
+      contextName: "Computer Science",
+    }
   ];
 
   return {

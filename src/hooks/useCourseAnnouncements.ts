@@ -30,3 +30,56 @@ export function useCourseAnnouncements(courseId: string) {
 
   return { announcements, isLoading, error, revalidate };
 }
+
+export function useMockCourseAnnouncements(courseId: string) {
+  const now = Date.now();
+  const mockAnnouncements = [
+    {
+      id: 1,
+      title: "Important: Final Exam Schedule",
+      htmlUrl: "https://canvas.example.com/announcements/1",
+      userName: "Prof. Smith",
+      createdAt: new Date(now - 1 * 60 * 60 * 1000).toISOString(), // 1 hour ago
+      formatedCreatedAt: "1 hour ago",
+    },
+    {
+      id: 2,
+      title: "Guest Speaker Next Week",
+      htmlUrl: "https://canvas.example.com/announcements/2",
+      userName: "Dr. Johnson",
+      createdAt: new Date(now - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+      formatedCreatedAt: "2 days ago",
+    },
+    {
+      id: 3,
+      title: "Project Guidelines Updated",
+      htmlUrl: "https://canvas.example.com/announcements/3",
+      userName: "Prof. Smith",
+      createdAt: new Date(now - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+      formatedCreatedAt: "5 days ago",
+    },
+    {
+      id: 4,
+      title: "Mid-term Results Posted",
+      htmlUrl: "https://canvas.example.com/announcements/4",
+      userName: "Teaching Assistant",
+      createdAt: new Date(now - 14 * 24 * 60 * 60 * 1000).toISOString(), // 2 weeks ago
+      formatedCreatedAt: "2 weeks ago",
+    },
+    {
+      id: 5,
+      title: "Welcome to the Course",
+      htmlUrl: "https://canvas.example.com/announcements/5",
+      userName: "Prof. Smith",
+      createdAt: new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString(), // 1 month ago
+      formatedCreatedAt: "1 month ago",
+    }
+  ];
+
+  return {
+    announcements: mockAnnouncements,
+    isLoading: false,
+    error: null,
+    revalidate: () => Promise.resolve(),
+  };
+}
