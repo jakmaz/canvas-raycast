@@ -1,4 +1,3 @@
-# Canvas LMS Changelog
+# Canvas Changelog
 
 ## [Initial Version] - {PR_MERGE_DATE}
-

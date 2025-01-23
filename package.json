@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "canvas-lms",
-  "title": "Canvas LMS",
+  "name": "canvas",
+  "title": "Canvas",
   "description": "Effortlessly connect with Canvas LMS to access courses, assignments, grades, and more directly from Raycast.",
   "icon": "extension-icon.png",
   "author": "jakmaz",
@@ -52,7 +52,7 @@
       "required": true,
       "name": "domain",
       "title": "Institution Domain",
-      "description": "The domain of your Canvas LMS institution, visible in your Canvas URL",
+      "description": "The domain of your Canvas institution, visible in your Canvas URL",
       "placeholder": "canvas.mit.com",
       "type": "textfield"
     },
@@ -60,7 +60,7 @@
       "required": true,
       "name": "token",
       "title": "Access Token",
-      "description": "Your Canvas LMS Access Token, can be created in account settings",
+      "description": "Your Canvas Access Token, can be created in account settings",
       "placeholder": "12345~AbCdEfGhIjKlMnOpQrStUvWxYz1234567890AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPp",
       "type": "textfield"
     }

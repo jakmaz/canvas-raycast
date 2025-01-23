@@ -1,4 +1,4 @@
-# Canvas LMS Raycast Extension
+# Canvas Raycast Extension
 
 Effortlessly connect with Canvas LMS to access courses, assignments, grades, and more directly from Raycast.
 
@@ -8,9 +8,9 @@ This extension requires two preferences to function correctly: the **Institution
 
 1.  **Institution Domain**
 
-    - **Description**: The domain of your Canvas LMS institution.
+    - **Description**: The domain of your Canvas institution.
     - **Where to Find**:
-      - Navigate to your Canvas LMS in a web browser.
+      - Navigate to your Canvas in a web browser.
       - The domain is visible in the URL bar, e.g., `https://canvas.mit.com`.
     - **Example**:
       - If your institution URL is `https://canvas.mit.com`, set the `Institution Domain` to `canvas.mit.com`.
@@ -19,7 +19,7 @@ This extension requires two preferences to function correctly: the **Institution
 
     - **Description**: A personal access token used to authenticate API requests.
     - **How to Create**:
-      1.  Log in to your Canvas LMS account.
+      1.  Log in to your Canvas account.
       2.  Navigate to your **Account Settings**:
           - Click your profile picture or the "Account" link in the left navigation menu.
           - Select **Settings**.
@@ -43,4 +43,3 @@ This extension requires two preferences to function correctly: the **Institution
 
 - This extension is **not an official Canvas LMS extension**.
 - Your data is used solely to interact with your Canvas LMS instance and is never shared or stored externally.
-
