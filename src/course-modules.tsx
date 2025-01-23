@@ -1,4 +1,4 @@
-import { List, ActionPanel, Action, Icon, Color, showToast, Toast } from "@raycast/api";
+import { List, ActionPanel, Action, Icon, showToast, Toast } from "@raycast/api";
 import { useCourseModules } from "./hooks/useCourseModules";
 
 export default function CourseModules({ course }: { course: { name: string; id: string } }) {
@@ -21,7 +21,7 @@ export default function CourseModules({ course }: { course: { name: string; id: 
                 actions={
                   <ActionPanel>
                     <Action.OpenInBrowser title="Open in Browser" url={item.htmlUrl} />
-                    <Action.CopyToClipboard title="Copy Link" content={item.htmlUrl} />
+                    <Action.CopyToClipboard title="Copy Module Link" content={item.htmlUrl} />
                   </ActionPanel>
                 }
               />

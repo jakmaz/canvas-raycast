@@ -24,7 +24,7 @@ export default function CourseAnnouncements({ course }: { course: { name: string
           actions={
             <ActionPanel>
               <Action.OpenInBrowser title="Open in Browser" url={announcement.htmlUrl} />
-              <Action.CopyToClipboard title="Copy Link" content={announcement.htmlUrl} />
+              <Action.CopyToClipboard title="Copy Announcement Link" content={announcement.htmlUrl} />
             </ActionPanel>
           }
         />

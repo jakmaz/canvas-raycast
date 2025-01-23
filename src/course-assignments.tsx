@@ -57,7 +57,7 @@ export default function CourseAssignments({ course }: { course: { name: string; 
           accessories={[{ tag: assignment.formattedDueAt }]}
           actions={
             <ActionPanel>
-              <Action.OpenInBrowser title="Open Assignment" url={assignment.htmlUrl} />
+              <Action.OpenInBrowser title="Open in Browser" url={assignment.htmlUrl} />
               <Action.CopyToClipboard title="Copy Assignment Link" content={assignment.htmlUrl} />
             </ActionPanel>
           }
