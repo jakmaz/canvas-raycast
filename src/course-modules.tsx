@@ -9,7 +9,10 @@ export default function CourseModules({ course }: { course: { name: string; id: 
   }
 
   return (
-    <List>
+    <List
+      navigationTitle={`Modules for ${course.name}`}
+      isLoading={isLoading}
+    >
       {modules.map((module) => (
         <List.Section key={module.id} title={module.name}>
           {module.items.length > 0 ? (
@@ -20,8 +23,8 @@ export default function CourseModules({ course }: { course: { name: string; id: 
                 icon={getIconForType(item.type)}
                 actions={
                   <ActionPanel>
-                    <Action.OpenInBrowser title="Open in Browser" url={item.html_url} />
-                    <Action.CopyToClipboard title="Copy Link" content={item.html_url} />
+                    <Action.OpenInBrowser title="Open in Browser" url={item.htmlUrl} />
+                    <Action.CopyToClipboard title="Copy Link" content={item.htmlUrl} />
                   </ActionPanel>
                 }
               />

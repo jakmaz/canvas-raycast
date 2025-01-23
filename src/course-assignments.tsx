@@ -38,6 +38,7 @@ export default function CourseAssignments({ course }: { course: { name: string; 
 
   return (
     <List
+      navigationTitle={`Assignments for ${course.name}`}
       isLoading={isLoading}
       searchBarPlaceholder="Search assignments..."
       searchBarAccessory={
