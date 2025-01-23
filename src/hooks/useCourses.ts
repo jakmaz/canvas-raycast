@@ -33,3 +33,56 @@ export function useCourses() {
 
   return { data: sortedCourses, isLoading, error, revalidate };
 }
+
+export function useMockCourses() {
+  const mockCourses = [
+    {
+      id: "1",
+      courseCode: "CS101",
+      name: "Introduction to Programming",
+      isFavorite: true,
+      published: true,
+    },
+    {
+      id: "2",
+      courseCode: "MATH201",
+      name: "Advanced Mathematics",
+      isFavorite: true,
+      published: false,
+    },
+    {
+      id: "3",
+      courseCode: "ENG102",
+      name: "Academic Writing",
+      isFavorite: false,
+      published: true,
+    },
+    {
+      id: "4",
+      courseCode: "HIST100",
+      name: "World History",
+      isFavorite: false,
+      published: true,
+    },
+    {
+      id: "5",
+      courseCode: "PHYS202",
+      name: "Physics II",
+      isFavorite: false,
+      published: false,
+    },
+  ];
+
+  const sortedCourses = mockCourses.sort((a, b) => {
+    if (a.isFavorite !== b.isFavorite) return b.isFavorite ? 1 : -1;
+    if (a.published !== b.published) return b.published ? 1 : -1;
+    return 0;
+  });
+
+  return {
+    data: sortedCourses,
+    isLoading: false,
+    error: null,
+    revalidate: () => Promise.resolve(),
+  };
+}

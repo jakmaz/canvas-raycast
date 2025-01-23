@@ -1,4 +1,4 @@
-import { ActionPanel, Action, Icon, List, Color, useNavigation, showToast, Toast } from "@raycast/api";
+import { ActionPanel, Action, Icon, List, useNavigation, showToast, Toast } from "@raycast/api";
 import CoursePages from "./course-pages";
 import { useCourses } from "./hooks/useCourses";
 
@@ -16,9 +16,9 @@ export default function CoursesCommand() {
       return { source: Icon.WrenchScrewdriver };
     }
     if (course.isFavorite) {
-      return { source: Icon.Star, tintColor: Color.Yellow };
+      return { source: Icon.Star };
     }
-    return { source: Icon.Book, tintColor: Color.Green };
+    return { source: Icon.Book };
   }
 
   return (
@@ -30,7 +30,7 @@ export default function CoursesCommand() {
             key={course.courseCode}
             icon={icon}
             title={course.name || "Untitled Course"}
-            accessories={[{ text: course.courseCode || "No course code" }]}
+            accessories={[{ tag: course.courseCode || "No course code" }]}
             actions={
               <ActionPanel>
                 <Action

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Color, Icon, List, showToast, Toast, Action, ActionPanel } from "@raycast/api";
+import { Icon, List, showToast, Toast, Action, ActionPanel } from "@raycast/api";
 import { useCourseAssignments } from "./hooks/useCourseAssignments";
 
 export default function CourseAssignments({ course }: { course: { name: string; id: string } }) {
@@ -12,14 +12,14 @@ export default function CourseAssignments({ course }: { course: { name: string; 
 
   // Function to determine the icon based on assignment properties
   function getIcon(dueAt: string | null) {
-    if (!dueAt) return { source: Icon.Document, tintColor: Color.Blue }; // Default icon if no due date
+    if (!dueAt) return { source: Icon.Document }; // Default icon if no due date
 
     const dueDate = new Date(dueAt);
     const isDueSoon = dueDate.getTime() - Date.now() <= 7 * 24 * 60 * 60 * 1000; // Due in the next 7 days
 
     return isDueSoon
-      ? { source: Icon.Clock, tintColor: Color.Orange } // Clock for due soon
-      : { source: Icon.Document, tintColor: Color.Blue }; // Default icon
+      ? { source: Icon.Clock } // Clock for due soon
+      : { source: Icon.Document }; // Default icon
   }
 
   const now = new Date();
@@ -54,7 +54,7 @@ export default function CourseAssignments({ course }: { course: { name: string; 
           key={assignment.id}
           icon={assignment.icon}
           title={assignment.name}
-          accessories={[{ text: assignment.formattedDueAt }]}
+          accessories={[{ tag: assignment.formattedDueAt }]}
           actions={
             <ActionPanel>
               <Action.OpenInBrowser title="Open Assignment" url={assignment.htmlUrl} />

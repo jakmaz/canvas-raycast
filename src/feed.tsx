@@ -1,8 +1,15 @@
-import { ActionPanel, Action, List, showToast, Toast } from "@raycast/api";
+import { ActionPanel, Action, List, showToast, Toast, Icon } from "@raycast/api";
 import { useFeed } from "./hooks/useFeed";
 
 export default function FeedCommand() {
   const { activities, isLoading, error } = useFeed();
+
+  function getIcon(activity: any) {
+    if (activity.type === "Announcement") {
+      return { source: Icon.Megaphone };
+    }
+    return { source: Icon.Bell };
+  }
 
   if (error) {
     showToast(Toast.Style.Failure, "Failed to fetch feed", error.message);
@@ -14,7 +21,8 @@ export default function FeedCommand() {
         <List.Item
           key={activity.id}
           title={activity.title}
-          accessories={[{ text: activity.formattedCreatedAt }]}
+          icon={getIcon(activity)}
+          accessories={[{ tag: new Date(activity.createdAt) }]}
           actions={
             <ActionPanel>
               <Action.OpenInBrowser title="Open in Browser" url={activity.htmlUrl} />

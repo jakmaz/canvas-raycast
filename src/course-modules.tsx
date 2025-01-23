@@ -9,10 +9,7 @@ export default function CourseModules({ course }: { course: { name: string; id: 
   }
 
   return (
-    <List
-      navigationTitle={`Modules for ${course.name}`}
-      isLoading={isLoading}
-    >
+    <List navigationTitle={`Modules for ${course.name}`} isLoading={isLoading}>
       {modules.map((module) => (
         <List.Section key={module.id} title={module.name}>
           {module.items.length > 0 ? (
@@ -30,7 +27,7 @@ export default function CourseModules({ course }: { course: { name: string; id: 
               />
             ))
           ) : (
-            <List.Item title="No items available" icon={Icon.XmarkCircle} />
+            <List.Item title="No items available" icon={Icon.Xmark} />
           )}
         </List.Section>
       ))}

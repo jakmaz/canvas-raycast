@@ -1,5 +1,5 @@
 import { ActionPanel, Action, List, Icon, Color, showToast, Toast } from "@raycast/api";
-import { Assignment, useDeadlines } from "./hooks/useDeadlines";
+import { useDeadlines } from "./hooks/useDeadlines";
 
 export default function DeadlinesCommand() {
   const { assignments, isLoading, error } = useDeadlines();
@@ -10,12 +10,12 @@ export default function DeadlinesCommand() {
 
   return (
     <List isLoading={isLoading} searchBarPlaceholder="Search assignments...">
-      {assignments.map((assignment: Assignment) => (
+      {assignments.map((assignment) => (
         <List.Item
           key={assignment.id}
           title={assignment.title}
           subtitle={assignment.contextName}
-          accessories={[{ text: assignment.formattedDueAt }]}
+          accessories={[{ tag: new Date(assignment.dueAt) || "" }]}
           icon={getIcon(assignment)}
           actions={
             <ActionPanel>
@@ -32,7 +32,7 @@ export default function DeadlinesCommand() {
 /**
  * Determine the icon based on due date.
  */
-function getIcon(assignment: Assignment) {
+function getIcon(assignment: any) {
   const dueDate = assignment.dueAt ? new Date(assignment.dueAt) : null;
   const isDueSoon = dueDate && dueDate.getTime() - Date.now() <= 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 

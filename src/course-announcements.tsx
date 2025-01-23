@@ -20,7 +20,7 @@ export default function CourseAnnouncements({ course }: { course: { name: string
           title={announcement.title}
           subtitle={`By ${announcement.userName}`}
           icon={Icon.Megaphone}
-          accessories={[{ text: announcement.formatedCreatedAt }]}
+          accessories={[{ tag: new Date(announcement.createdAt) }]}
           actions={
             <ActionPanel>
               <Action.OpenInBrowser title="Open in Browser" url={announcement.htmlUrl} />
