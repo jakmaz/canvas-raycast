@@ -32,6 +32,24 @@ This extension requires two preferences to function correctly: the **Institution
 
 ---
 
+### Features
+
+#### Implemented
+
+- View course feed and upcoming deadlines.
+- Browse courses, their assignments, modules, and announcements.
+- Open assignments, modules, and announcements directly in the browser.
+
+#### In Progress
+
+- View the contents of assignments, announcements, and modules inside the extension instead of only opening them in the browser.
+
+#### Planned
+
+- GPA and grades command for quick access to academic performance.
+
+---
+
 ### Troubleshooting
 
 - **Invalid Access Token**: Ensure the token is correctly copied and has not expired.
