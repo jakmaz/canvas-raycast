@@ -18,17 +18,18 @@ export function useFeed() {
   const { data, isLoading, error, revalidate } = useAPIFetch<ActivityItem[]>("users/self/activity_stream?per_page=50");
 
   const activities =
-    data?.map((item) => ({
-      id: item.id,
-      title: item.title,
-      message: item.message || "No message",
-      type: item.type,
-      htmlUrl: item.html_url,
-      readState: item.read_state,
-      createdAt: item.created_at,
-      formattedCreatedAt: formatDate(item.created_at),
-    }))
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
+    data
+      ?.map((item) => ({
+        id: item.id,
+        title: item.title,
+        message: item.message || "No message",
+        type: item.type,
+        htmlUrl: item.html_url,
+        readState: item.read_state,
+        createdAt: item.created_at,
+        formattedCreatedAt: formatDate(item.created_at),
+      }))
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
 
   return { activities, isLoading, error, revalidate };
 }

@@ -70,7 +70,7 @@ export function useMockCourseAssignments(courseId: string) {
       dueAt: null,
       formattedDueAt: "No due date",
       htmlUrl: "https://canvas.example.com/courses/1/assignments/5",
-    }
+    },
   ].sort((a, b) => {
     if (!a.dueAt) return 1;
     if (!b.dueAt) return -1;

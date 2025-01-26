@@ -74,7 +74,7 @@ export function useMockCourseAnnouncements(courseId: string) {
       userName: "Prof. Smith",
       createdAt: new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString(), // 1 month ago
       formatedCreatedAt: "1 month ago",
-    }
+    },
   ];
 
   return {
