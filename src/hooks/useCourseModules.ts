@@ -36,6 +36,7 @@ export function useCourseModules(courseId: string) {
   return { modules, isLoading, error, revalidate };
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export function useMockCourseModules(courseId: string) {
   const mockModules = [
     {

@@ -32,6 +32,7 @@ export function useCourseAssignments(courseId: string) {
   return { assignments, isLoading, error, revalidate };
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export function useMockCourseAssignments(courseId: string) {
   const now = Date.now();
   const mockAssignments = [

@@ -31,6 +31,7 @@ export function useCourseAnnouncements(courseId: string) {
   return { announcements, isLoading, error, revalidate };
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export function useMockCourseAnnouncements(courseId: string) {
   const now = Date.now();
   const mockAnnouncements = [
