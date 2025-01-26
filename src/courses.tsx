@@ -10,8 +10,7 @@ export default function CoursesCommand() {
     showToast(Toast.Style.Failure, "Failed to fetch courses", error.message);
   }
 
-  // Function to determine the icon and color based on course properties
-  function getIconAndColor(course: any) {
+  function getIcon(course: { published: boolean; isFavorite: boolean }) {
     if (!course.published) {
       return { source: Icon.WrenchScrewdriver };
     }
@@ -24,11 +23,10 @@ export default function CoursesCommand() {
   return (
     <List isLoading={isLoading} searchBarPlaceholder="Search courses...">
       {data?.map((course) => {
-        const icon = getIconAndColor(course);
         return (
           <List.Item
             key={course.courseCode}
-            icon={icon}
+            icon={getIcon(course)}
             title={course.name || "Untitled Course"}
             accessories={[{ tag: course.courseCode || "No course code" }]}
             actions={

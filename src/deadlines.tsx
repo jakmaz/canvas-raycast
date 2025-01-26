@@ -32,7 +32,7 @@ export default function DeadlinesCommand() {
 /**
  * Determine the icon based on due date.
  */
-function getIcon(assignment: any) {
+function getIcon(assignment: { dueAt: string }) {
   const dueDate = assignment.dueAt ? new Date(assignment.dueAt) : null;
   const isDueSoon = dueDate && dueDate.getTime() - Date.now() <= 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 

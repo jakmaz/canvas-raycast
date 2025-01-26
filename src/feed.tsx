@@ -4,7 +4,7 @@ import { useFeed } from "./hooks/useFeed";
 export default function FeedCommand() {
   const { activities, isLoading, error } = useFeed();
 
-  function getIcon(activity: any) {
+  function getIcon(activity: { type: string }) {
     if (activity.type === "Announcement") {
       return { source: Icon.Megaphone };
     }
